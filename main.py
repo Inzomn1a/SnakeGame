@@ -32,7 +32,7 @@ game_is_on = True
 while game_is_on:
     scoreboard.print_scoreboard()
     snake.move()
-    time.sleep(0.075)  # Updates per second / Speed of snake
+    time.sleep(0.09)  # Updates per second / Speed of snake
     screen.update()
 
     # Detect foodCollision //respawn food and increase score on hit
@@ -43,16 +43,21 @@ while game_is_on:
 
     # Detect wallCollision
     if snake.snakehead.xcor() > 280 or snake.snakehead.xcor() < -300 or snake.snakehead.ycor() > 300 or snake.snakehead.ycor() < -280:
-        game_is_on = False
         screen.bgcolor("red")
-        scoreboard.game_over_sequence()
+        time.sleep(1)
+        scoreboard.reset()
+        screen.bgcolor("black")
+
+        snake.reset_snake()
 
     # Detect tailCollision
     for segment in snake.segments[1:]:
         if snake.snakehead.distance(segment) < 10:
-            game_is_on = False
             screen.bgcolor("red")
-            scoreboard.game_over_sequence()
+            time.sleep(1)
+            scoreboard.reset()
+            screen.bgcolor("black")
+            snake.reset_snake()
 
 
 screen.exitonclick()
